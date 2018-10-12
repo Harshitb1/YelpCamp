@@ -8,6 +8,12 @@ app.set("view engine","ejs");
 var campgrounds = [
     {name: "Salman Creek",image :"https://photosforclass.com/download/flickr-3753652230"},
     {name: "Granite Hill",image :"https://photosforclass.com/download/flickr-15215548990"},
+    {name: "Mountain goat", image:"https://photosforclass.com/download/flickr-14360459119"},
+    {name: "Salman Creek",image :"https://photosforclass.com/download/flickr-3753652230"},
+    {name: "Granite Hill",image :"https://photosforclass.com/download/flickr-15215548990"},
+    {name: "Mountain goat", image:"https://photosforclass.com/download/flickr-14360459119"},
+    {name: "Salman Creek",image :"https://photosforclass.com/download/flickr-3753652230"},
+    {name: "Granite Hill",image :"https://photosforclass.com/download/flickr-15215548990"},
     {name: "Mountain goat", image:"https://photosforclass.com/download/flickr-14360459119"}
 ]
 

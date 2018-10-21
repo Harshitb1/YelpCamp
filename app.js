@@ -21,6 +21,10 @@ app.use(require("express-session")({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(function(req,res,next){
+   res.locals.currentUser =req.user;
+   next();
+});
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
@@ -66,7 +70,7 @@ app.get("/campgrounds",function(req,res){
             console.log(err);
         }
         else{
-            res.render("campgrounds/index",{campgrounds:campgrounds});
+            res.render("campgrounds/index",{campgrounds:campgrounds,currentUser: req.user});
         }
     });
 });
@@ -106,7 +110,7 @@ app.get("/campgrounds/:id",function(req,res){
     });
 }); 
 
-app.get("/campgrounds/:id/comments/new",function(req,res){
+app.get("/campgrounds/:id/comments/new",isLoggedIn,function(req,res){
    
     Campground.findById(req.params.id,function (err,foundcampground){
         if(err){
@@ -139,7 +143,7 @@ app.get("/campgrounds/:id/comments/new",function(req,res){
 //     });
 // });
 
-app.post("/campgrounds/:id/comments", function(req, res){
+app.post("/campgrounds/:id/comments",isLoggedIn ,function(req, res){
     //lookup campground using id
     Campground.findById(req.params.id, function(err, campground) {
         if(err){
@@ -178,3 +182,27 @@ app.post("/register",function(req,res){
         })
     });
 });
+
+app.get("/login",function(req,res){
+    res.render("login");
+});
+
+app.post("/login",passport.authenticate("local",
+{ successRedirect:"/campgrounds",
+  failureRedirect:"/login"
+}),function(req,res){
+    
+});
+
+app.get("/logout",function(req,res){
+    req.logout();
+    res.redirect("/campgrounds");
+});
+
+function isLoggedIn(req,res,next){
+    if(req.isAuthenticated()){
+        return next();
+    }else{
+        res.redirect("/login");
+    }
+}

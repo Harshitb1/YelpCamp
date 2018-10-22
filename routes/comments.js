@@ -9,7 +9,7 @@ router.get("/new",isLoggedIn,function(req,res){
     Campground.findById(req.params.id,function (err,foundcampground){
         if(err){
             console.log(err);
-        }else{
+        }else{ 
             // console.log(foundcampground);
             res.render("comments/new",{campground : foundcampground});
         }
@@ -48,6 +48,9 @@ router.post("/",isLoggedIn ,function(req, res){
                 if(err){
                     console.log(err);
                 } else {
+                    comment.author.id =req.user._id;
+                    comment.author.username = req.user.username;
+                    comment.save();
                     //connect new comment to campground
                     campground.comments.push(comment._id);
                     //create new comment

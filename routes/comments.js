@@ -92,6 +92,7 @@ router.delete("/:comment_id",middleware.checkCommentOwnership,function(req,res){
             cosole.log(err);
             res.redirect("back");
         } else {
+            req.flash("success","comment deleted");
             res.redirect("back");
         }
     })

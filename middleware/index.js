@@ -8,6 +8,7 @@ var middlewareObj ={};
             
             Campground.findById(req.params.id,function(err,campground){
                 if(err){
+                    flash("error","Campground not found");
                     res.redirect("/campgrounds")
                 } else {
                     // console.log(campground.author.id);
@@ -16,12 +17,14 @@ var middlewareObj ={};
     
                         next();
                     }else{
+                        req.flash("error","You dont have permission to do that");
                         res.redirect("back");
                     }
                 }
             });
     
         } else {
+            req.flash("error","you need to be logged in to do that");
             res.redirect("back");
         }
        
@@ -32,6 +35,7 @@ var middlewareObj ={};
             
             Comment.findById(req.params.comment_id,function(err,comment){
                 if(err){
+                    flash("error","Comment not found");
                     res.redirect("/campgrounds")
                 } else {
                     // console.log(campground.author.id);
@@ -40,12 +44,14 @@ var middlewareObj ={};
     
                         next();
                     }else{
+                        req.flash("error","You dont have permission to do that");
                         res.redirect("back");
                     }
                 }
             });
     
         } else {
+            req.flash("error","you need to be logged in to do that");
             res.redirect("back");
         }
     }
@@ -54,6 +60,7 @@ var middlewareObj ={};
         if(req.isAuthenticated()){
             return next();
         }else{
+            req.flash("error","please login first!");
             res.redirect("/login");
         }
     }

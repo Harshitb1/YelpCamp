@@ -18,6 +18,7 @@ router.get("/",function(req,res){
 router.post("/",middleware.isLoggedIn,function(req,res){
     var name =req.body.name;
     var image = req.body.image;
+    var price = req.body.price;
     var image = req.body.image;
     var desc = req.body.description;
     var author = {
@@ -25,7 +26,7 @@ router.post("/",middleware.isLoggedIn,function(req,res){
         username: req.user.username
    };
 
-    var newCampground = {name:name,image:image, description:desc, author:author};
+    var newCampground = {name:name,image:image, description:desc, author:author, price:price};
 
     Campground.create(newCampground,  function(err,campground){
             if(err){
